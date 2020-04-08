@@ -19,11 +19,15 @@ class DuetWebAPI:
     import sys
     pt = 0
     _base_url = ''
+    _login_url = ''
 
 
-    def __init__(self,base_url):
+    def __init__(self,base_url,password):
         self._base_url = base_url
         try:
+            _loginURL_=(f'{self._base_url}'+'/rr_connect?password='+password+'&time=00:00')
+            r = self.requests.get(_loginURL_,timeout=(2,60))
+
             URL=(f'{self._base_url}'+'/rr_status?type=1')
             r = self.requests.get(URL,timeout=(2,60))
             j = self.json.loads(r.text)
